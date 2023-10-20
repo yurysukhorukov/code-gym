@@ -2,12 +2,13 @@ package dev.sukhorukov.architecture.observer;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class Publisher {
 
-    private List<Subscriber> subscriberList;
+    private List<Subscriber> subscriberList = new ArrayList<>();
     String mainState = "";
 
     boolean subscribe(Subscriber subscriber) {
