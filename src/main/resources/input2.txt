@@ -1,0 +1,7 @@
+rouge
+rouge
+bleu
+vert
+bleu
+rouge
+rouge
