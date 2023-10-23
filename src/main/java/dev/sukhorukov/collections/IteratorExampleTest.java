@@ -1,49 +1,53 @@
 package dev.sukhorukov.collections;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.*;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
 
 public class IteratorExampleTest {
 
-    @Test
-    void testIterator() {
-        // We can use Iterator when we need remove some elements of collection while iterating through
-        List<Integer> integerList = new ArrayList<>(Arrays.asList(1, 8, 9));
+  @Test
+  void testIterator() {
+    // We can use Iterator when we need remove some elements of collection while iterating through
+    List<Integer> integerList = new ArrayList<>(Arrays.asList(1, 8, 9));
 
-        Iterator<Integer> integerIterator = integerList.iterator();
+    Iterator<Integer> integerIterator = integerList.iterator();
 
-        while (integerIterator.hasNext()) {
-            integerIterator.next();
-            integerIterator.remove();
-        }
-
-        assert integerList.isEmpty();
+    while (integerIterator.hasNext()) {
+      integerIterator.next();
+      integerIterator.remove();
     }
 
-    @Test
-    void testListIterator() {
-        String palindrome = "madam";
+    assert integerList.isEmpty();
+  }
 
-        List<Character> characterList = palindrome.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+  @Test
+  void testListIterator() {
+    String palindrome = "madam";
 
-        //The main difference between Iterator and ListIterator in Java is that ListIterator is a bidirectional iterator,
-        // which means it can traverse the list in both forward and backward directions, while Iterator can only traverse
-        // the list in a forward direction. Additionally, ListIterator provides additional methods like add(), set(),
-        // and previous() that are not available in Iterator. ListIterator is only available for List implementations,
-        // while Iterator can be used with any collection type.
-        ListIterator<Character> listIterator = characterList.listIterator();
-        ListIterator<Character> reverseListIterator = characterList.listIterator(characterList.size());
-        boolean isPalindrome = true;
+    List<Character> characterList =
+        palindrome.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
 
-        while (listIterator.hasNext() && reverseListIterator.hasPrevious()) {
-            if (!Objects.equals(listIterator.next(), reverseListIterator.previous())) {
-                isPalindrome = false;
-                break;
-            }
-        }
+    // The main difference between Iterator and ListIterator in Java is that ListIterator is a
+    // bidirectional iterator,
+    // which means it can traverse the list in both forward and backward directions, while Iterator
+    // can only traverse
+    // the list in a forward direction. Additionally, ListIterator provides additional methods like
+    // add(), set(),
+    // and previous() that are not available in Iterator. ListIterator is only available for List
+    // implementations,
+    // while Iterator can be used with any collection type.
+    ListIterator<Character> listIterator = characterList.listIterator();
+    ListIterator<Character> reverseListIterator = characterList.listIterator(characterList.size());
+    boolean isPalindrome = true;
 
-        assert isPalindrome;
+    while (listIterator.hasNext() && reverseListIterator.hasPrevious()) {
+      if (!Objects.equals(listIterator.next(), reverseListIterator.previous())) {
+        isPalindrome = false;
+        break;
+      }
     }
+
+    assert isPalindrome;
+  }
 }

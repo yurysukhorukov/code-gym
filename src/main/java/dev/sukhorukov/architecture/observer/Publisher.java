@@ -1,32 +1,36 @@
 package dev.sukhorukov.architecture.observer;
 
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class Publisher {
 
-    private List<Subscriber> subscriberList = new ArrayList<>();
-    String mainState = "";
+  private List<Subscriber> subscriberList = new ArrayList<>();
+  String mainState = "";
 
-    boolean subscribe(Subscriber subscriber) {
-        return subscriberList.add(subscriber);
-    }
+  boolean subscribe(Subscriber subscriber) {
+    return subscriberList.add(subscriber);
+  }
 
-    boolean unsubscribe(Subscriber subscriber) {
-        return subscriberList.remove(subscriber);
-    }
+  boolean unsubscribe(Subscriber subscriber) {
+    return subscriberList.remove(subscriber);
+  }
 
-    void changeMainState(String newState) {
-        mainState = newState;
-        notifySubscribers();
-    }
+  void changeMainState(String newState) {
+    mainState = newState;
+    notifySubscribers();
+  }
 
-    private void notifySubscribers() {
-        for (Subscriber s : subscriberList) {
-            s.update(this);
-        }
-    }
+  private void notifySubscribers() {
+    subscriberList.forEach(
+        subscriber -> {
+          try {
+            subscriber.update(this);
+          } catch (Exception exception) {
+            // Обработка исключения
+          }
+        });
+  }
 }

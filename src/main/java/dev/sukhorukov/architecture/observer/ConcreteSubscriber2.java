@@ -1,8 +1,15 @@
 package dev.sukhorukov.architecture.observer;
 
-public class ConcreteSubscriber2 implements Subscriber {
-    @Override
-    public void update(Publisher publisher) {
-        System.out.println("Subscriber 2 has received new state: " + publisher.getMainState());
-    }
+public class ConcreteSubscriber2 {
+
+  /*
+  Большой и жирный класс со множеством полей
+   */
+
+  private static final Subscriber subscriber =
+      data -> System.out.println("Subscriber 2 has received new state: " + data.getMainState());
+
+  public Subscriber getSubscriber() {
+    return subscriber;
+  }
 }
