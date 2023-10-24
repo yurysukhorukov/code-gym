@@ -1,10 +1,14 @@
-package dev.sukhorukov;
+package dev.sukhorukov.interview.syngenta;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+/*
+2023 EPAM
+Questions from interview with Nicolas Fabre on Syngenta's project
+ */
 public class Interview {
 
   public static void main(String[] args) {
@@ -33,20 +37,9 @@ public class Interview {
 
   Input : A file containing list of gloves by their colour.
    */
-  //    static Integer getAllAvailablePairs(Path filePath) throws IOException {
-  //        int pairCount = 0;
-  //        final List<String> strings = Files.readAllLines(filePath);
-  //        for (String color : new HashSet<>(strings)) {
-  //            final long count = strings.stream().filter(s -> s.equals(color)).count();
-  //            pairCount += count / 2;
-  //        }
-  //        return pairCount;
-  //    }
-
   static Map<String, Long> getAllAvailablePairs(Path filePath) throws IOException {
     Map<String, Long> colorPairs = new HashMap<>();
     final List<String> strings = Files.readAllLines(filePath);
-    //        strings.stream().collect(Collectors.groupingBy())
     for (String color : new HashSet<>(strings)) {
       final long count = strings.stream().filter(s -> s.equals(color)).count();
       colorPairs.put(color, count / 2);
@@ -54,6 +47,21 @@ public class Interview {
     return colorPairs;
   }
 
+  /*
+  Find out if word is palindrome or not:
+          "fwkttkwf",
+          "heufueh",
+          "raceCar",
+          "Step on no pets",
+          "gazzag",
+          "a",
+          "I",
+          "ecte",
+          "bivpajvhx",
+          "tbqhxa",
+          "Red rum, sir, is murder",
+          "drive"
+   */
   static boolean isPalindrome(String s) {
     String string = s.toLowerCase();
     for (int i = 0; i < string.length() / 2; i++) {
