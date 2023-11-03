@@ -1,0 +1,45 @@
+docker run hello-world
+docker stats
+------
+docker run --rm --name rest-service \
+-p 8080:8080 \ ("Прокидываем порт изнутри контейнера")
+--network="host" \
+registry.gitlab.com/petrelevich/dockerregistry/rest-hello:1.0.0
+
+--------------------------
+docker run --rm --name rest-service \
+--memory=512m \ ("Выделяемая для процесса(контейнера) оперативная память")
+--cpus 2 \ ("Выделяемые для процесса(контейнера) количество ядер")
+-p 8080:8080 \
+--network="host" \
+-e JAVA_TOOL_OPTIONS="-Xms350m -Xmx350m -XX:+UseSerialGC" \ ("Указываем лимиты памяти и вид GC для JVM")
+registry.gitlab.com/petrelevich/dockerregistry/rest-hello:1.0.0
+
+--------------------------
+
+java -Xms350m -Xmx350m -jar  L09-docker.jar
+
+("Здесь демонстрировалось что если запустить приложение на прямую то выделится ровно 350 мб,
+ в то время как если в контейнере то будет чуть меньше - разработчики не знают почему ><")
+
+--------------------------
+
+docker run --rm --name rest-service \
+--memory=300m \ ("Выделили 300 мб под контейнер")
+--cpus 2 \
+-p 8080:8080 \
+--network="host" \
+-e JAVA_TOOL_OPTIONS="-Xms350m -Xmx350m -XX:+UseSerialGC" \
+
+("Но передали JVM лимит 350 мб,и это не помешает приложению запустится, проблема будет когда
+мы привысим 300Мб выделенные для контейнера,- Docker daemon уничтожит процесс")
+registry.gitlab.com/petrelevich/dockerregistry/rest-hello:1.0.0
+
+--------------------------
+docker run --rm --name rest-service \
+--memory=256m \
+--cpus 2 \
+-p 8080:8080 \
+--network="host" \
+-e JAVA_TOOL_OPTIONS="-XX:InitialRAMPercentage=80 -XX:MaxRAMPercentage=80 -XX:+UseSerialGC" \ ("Лучше указывать лимиты памяти в процентах от имеющейся в контнейнере")
+registry.gitlab.com/petrelevich/dockerregistry/rest-hello:1.0.0
